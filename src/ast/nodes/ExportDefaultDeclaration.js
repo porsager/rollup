@@ -115,9 +115,12 @@ export default class ExportDefaultDeclaration extends Node {
 					const hasEffects = this.declaration.hasEffects( this.module.scope );
 					code.remove( this.start, hasEffects ? declaration_start : this.next || this.end );
 				}
+			} else if (name === this.declaration.name) {
+				code.remove( this.start, this.next || this.end );
 			} else {
-				code.overwrite( this.start, declaration_start, `${this.module.bundle.varOrConst} ${name} = ` );
+				code.overwrite( this.start, declaration_start, ((this.module.bundle.varOrConst) + " " + name + " = ") );
 			}
+
 			// code.remove( this.start, this.next || this.end );
 		}
 	}
